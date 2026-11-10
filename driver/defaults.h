@@ -23,6 +23,12 @@
 // Rotation (in radians)
 #define ROTATION_ANGLE 0
 
+// Directional scaling (multipliers applied to the raw input, depending on the direction of the movement)
+#define DIR_SCALE_X_POS 1 // Right
+#define DIR_SCALE_X_NEG 1 // Left
+#define DIR_SCALE_Y_POS 1 // Down
+#define DIR_SCALE_Y_NEG 1 // Up
+
 // LUT settings
 #define LUT_SIZE 0
 #define LUT_DATA 0

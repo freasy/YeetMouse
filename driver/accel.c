@@ -81,6 +81,11 @@ PARAM_F(RotationAngle, ROTATION_ANGLE,      "Amount of clockwise rotation (in ra
 PARAM_F(AngleSnap_Threshold, ANGLE_SNAPPING_THRESHOLD,      "Rotation value at which angle snapping is triggered (in radians)");
 PARAM_F(AngleSnap_Angle, ANGLE_SNAPPING_ANGLE,      "Amount of clockwise rotation for angle snapping (in radians)");
 
+PARAM_F(DirScaleXPos,   DIR_SCALE_X_POS,    "Multiplier for the raw input moving right (positive X)");
+PARAM_F(DirScaleXNeg,   DIR_SCALE_X_NEG,    "Multiplier for the raw input moving left (negative X)");
+PARAM_F(DirScaleYPos,   DIR_SCALE_Y_POS,    "Multiplier for the raw input moving down (positive Y)");
+PARAM_F(DirScaleYNeg,   DIR_SCALE_Y_NEG,    "Multiplier for the raw input moving up (negative Y)");
+
 FP_LONG g_LutData_x[MAX_LUT_ARRAY_SIZE]; // Array to store the x-values of the LUT data
 FP_LONG g_LutData_y[MAX_LUT_ARRAY_SIZE]; // Array to store the y-values of the LUT data
 
@@ -122,6 +127,10 @@ INLINE void update_params(ktime_t now)
     PARAM_UPDATE(RotationAngle);
     PARAM_UPDATE(AngleSnap_Threshold);
     PARAM_UPDATE(AngleSnap_Angle);
+    PARAM_UPDATE(DirScaleXPos);
+    PARAM_UPDATE(DirScaleXNeg);
+    PARAM_UPDATE(DirScaleYPos);
+    PARAM_UPDATE(DirScaleYNeg);
     g_LutSize = PARAM_UPDATE_UL(LutSize);
     g_AccelerationMode = PARAM_UPDATE_UL(AccelerationMode);
     if(g_LutSize > MAX_LUT_ARRAY_SIZE)
@@ -210,6 +219,14 @@ int accelerate(int *x, int *y)
 
     // Update acceleration parameters periodically
     update_params(now);
+
+    // Apply directional scaling to the raw input, so everything below (speed included) works on the scaled values
+    FP_LONG dir_scale_x = delta_x > 0 ? g_DirScaleXPos : g_DirScaleXNeg;
+    FP_LONG dir_scale_y = delta_y > 0 ? g_DirScaleYPos : g_DirScaleYNeg;
+    if (dir_scale_x != FP64_1)
+        delta_x = FP64_Mul(delta_x, dir_scale_x);
+    if (dir_scale_y != FP64_1)
+        delta_y = FP64_Mul(delta_y, dir_scale_y);
 
     // Apply Pre-Scale
     if (g_PreScale != FP64_1) {
