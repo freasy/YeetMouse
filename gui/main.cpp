@@ -485,6 +485,13 @@ static int OnGui() {
         if (params[selected_mode].asThreshold > 0)
             ImGui::SetItemTooltip("Rotation is applied after Angle Snapping");
 
+        ImGui::SeparatorText("Directional Scale");
+        change |= ImGui::DragFloat("##DirScaleXPos_Param", &params[selected_mode].dirScaleXPos, 0.001, 0.1, 5, "Right %.4f");
+        change |= ImGui::DragFloat("##DirScaleXNeg_Param", &params[selected_mode].dirScaleXNeg, 0.001, 0.1, 5, "Left %.4f");
+        change |= ImGui::DragFloat("##DirScaleYPos_Param", &params[selected_mode].dirScaleYPos, 0.001, 0.1, 5, "Down %.4f");
+        change |= ImGui::DragFloat("##DirScaleYNeg_Param", &params[selected_mode].dirScaleYNeg, 0.001, 0.1, 5, "Up %.4f");
+        ImGui::SetItemTooltip("Multipliers applied to the raw input, depending on the direction of the movement");
+
         if (change)
             functions[selected_mode].PreCacheFunc();
 
