@@ -115,6 +115,14 @@ std::optional<Parameters> ConfigHelper::ImportAny(StreamType &stream, char *lut_
             params.asThreshold = val / (is_config_h ? DEG2RAD : 1);
         else if (name == "as_angle" || name == "angle_snapping_angle")
             params.asAngle = val / (is_config_h ? DEG2RAD : 1);
+        else if (name == "dirscalexpos" || name == "dir_scale_x_pos")
+            params.dirScaleXPos = val;
+        else if (name == "dirscalexneg" || name == "dir_scale_x_neg")
+            params.dirScaleXNeg = val;
+        else if (name == "dirscaleypos" || name == "dir_scale_y_pos")
+            params.dirScaleYPos = val;
+        else if (name == "dirscaleyneg" || name == "dir_scale_y_neg")
+            params.dirScaleYNeg = val;
         else if (name == "lut_size")
             params.lutSize = val;
         else if (name == "lut_data") {

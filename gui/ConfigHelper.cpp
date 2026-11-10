@@ -66,6 +66,10 @@ namespace ConfigHelper {
             res_ss << "rotation=" << params.rotation << std::endl;
             res_ss << "as_threshold=" << params.asThreshold << std::endl;
             res_ss << "as_angle=" << params.asAngle << std::endl;
+            res_ss << "dirScaleXPos=" << params.dirScaleXPos << std::endl;
+            res_ss << "dirScaleXNeg=" << params.dirScaleXNeg << std::endl;
+            res_ss << "dirScaleYPos=" << params.dirScaleYPos << std::endl;
+            res_ss << "dirScaleYNeg=" << params.dirScaleYNeg << std::endl;
             res_ss << "LUT_size=" << params.lutSize << std::endl;
             res_ss << "LUT_data=" << DriverHelper::EncodeLutData(params.lutDataX, params.lutDataY, params.lutSize, true) << std::endl;
             res_ss << "CC_data_aggregate=" << params.customCurve.ExportCustomCurve();
@@ -112,6 +116,10 @@ namespace ConfigHelper {
             res_ss << "#define ROTATION_ANGLE " << (params.rotation * DEG2RAD) << std::endl;
             res_ss << "#define ANGLE_SNAPPING_THRESHOLD " << (params.asThreshold * DEG2RAD) << std::endl;
             res_ss << "#define ANGLE_SNAPPING_ANGLE " << (params.asAngle * DEG2RAD) << std::endl;
+            res_ss << "#define DIR_SCALE_X_POS " << params.dirScaleXPos << std::endl;
+            res_ss << "#define DIR_SCALE_X_NEG " << params.dirScaleXNeg << std::endl;
+            res_ss << "#define DIR_SCALE_Y_POS " << params.dirScaleYPos << std::endl;
+            res_ss << "#define DIR_SCALE_Y_NEG " << params.dirScaleYNeg << std::endl;
             res_ss << "#define LUT_SIZE " << params.lutSize << std::endl;
             res_ss << "#define LUT_DATA " << DriverHelper::EncodeLutData(
                 params.lutDataX, params.lutDataY, params.lutSize, false) << std::endl;

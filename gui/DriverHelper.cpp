@@ -50,6 +50,18 @@ static bool GetParameterTy(const std::string &param_name, std::string &value) {
     }
 }
 
+// Reads a parameter that older versions of the driver don't have, the value is left untouched if it can't be read
+static bool GetOptionalParameterF(const std::string &param_name, float &value) {
+    std::ifstream file(YEETMOUSE_PARAMS_DIR + param_name);
+    float temp = 0;
+
+    if (!(file >> temp))
+        return false;
+
+    value = temp;
+    return true;
+}
+
 template<typename Ty>
 bool SetParameterTy(const std::string &param_name, Ty value) {
     try {
@@ -328,6 +340,10 @@ namespace DriverHelper {
         params.asThreshold /= DEG2RAD;
         res &= GetParameterF("AngleSnap_Angle", params.asAngle);
         params.asAngle /= DEG2RAD;
+        GetOptionalParameterF("DirScaleXPos", params.dirScaleXPos);
+        GetOptionalParameterF("DirScaleXNeg", params.dirScaleXNeg);
+        GetOptionalParameterF("DirScaleYPos", params.dirScaleYPos);
+        GetOptionalParameterF("DirScaleYNeg", params.dirScaleYNeg);
         std::string Lut_dataBuf;
         res &= GetParameterS("LutDataBuf", Lut_dataBuf);
         Lut_dataBuf.copy(lutUserData, MAX_LUT_BUF_LEN-1, 0);
@@ -401,6 +417,10 @@ bool Parameters::SaveAll(bool auto_update) {
     res &= SetParameterTy("RotationAngle", rotation * DEG2RAD);
     res &= SetParameterTy("AngleSnap_Threshold", asThreshold * DEG2RAD);
     res &= SetParameterTy("AngleSnap_Angle", asAngle * DEG2RAD);
+    res &= SetParameterTy("DirScaleXPos", dirScaleXPos);
+    res &= SetParameterTy("DirScaleXNeg", dirScaleXNeg);
+    res &= SetParameterTy("DirScaleYPos", dirScaleYPos);
+    res &= SetParameterTy("DirScaleYNeg", dirScaleYNeg);
 
     // Specific
     res &= SetParameterTy("Acceleration", accel);

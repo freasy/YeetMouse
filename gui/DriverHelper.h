@@ -208,6 +208,10 @@ struct Parameters {
     float rotation = 0; // Stored in degrees, converted to radians when writing out
     float asThreshold = 0; // Stored in degrees, converted to radians when writing out
     float asAngle = 0; // Stored in degrees, converted to radians when writing out
+    float dirScaleXPos = 1.0f; // Multiplier for the raw input moving right
+    float dirScaleXNeg = 1.0f; // Multiplier for the raw input moving left
+    float dirScaleYPos = 1.0f; // Multiplier for the raw input moving down
+    float dirScaleYNeg = 1.0f; // Multiplier for the raw input moving up
 
     double lutDataX[MAX_LUT_ARRAY_SIZE]{};
     double lutDataY[MAX_LUT_ARRAY_SIZE]{};
